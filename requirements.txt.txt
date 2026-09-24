@@ -1,0 +1,9 @@
+pandas
+requests
+scikit-learn
+ortools
+streamlit
+folium
+streamlit-folium
+altair
+pydeck
