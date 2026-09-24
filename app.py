@@ -228,8 +228,9 @@ with tab1:
             fill=True, fill_color=color, fill_opacity=.9,
             tooltip=f"BIN-{i:03d} · {r.fill:.0f}% · {'serviced' if on else 'skipped'}" + (" · school zone" if r.school else ""),
         ).add_to(m)
-    m.get_root().html.add_child(folium.Element(
-        '<div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:#fff;padding:8px 12px;'
+ 
+      m.get_root().html.add_child(folium.Element(
+        '<div style="position:fixed;bottom:24px;left:24px;z-index:9999;background:#fff;color:#000;padding:8px 12px;'
         'border:1px solid #bbb;border-radius:4px;font:12px sans-serif;line-height:1.6">'
         '<span style="color:#dc2626">●</span> Above threshold (serviced)<br>'
         '<span style="color:#16a34a">●</span> Skipped<br>'
