@@ -25,7 +25,6 @@ st.markdown(
     </style>""",
     unsafe_allow_html=True,
 )
-)
 
 # ------------------------------------------------------------------ assumptions
 CENTER = (30.2672, -97.7431)
