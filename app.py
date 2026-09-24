@@ -20,10 +20,11 @@ from streamlit_folium import st_folium
 st.set_page_config(page_title="Dispatch Console", page_icon="🚛", layout="wide")
 st.markdown(
     """<style>
-    [data-testid="stMetric"]{background:#f4f6f8;border-left:5px solid #1f4e79;padding:.7rem 1rem;border-radius:4px}
+    [data-testid="stMetric"]{background: rgba(128, 128, 128, 0.1); border-left:5px solid #A94A4D; padding:.7rem 1rem; border-radius:4px}
     [data-testid="stMetricValue"]{font-variant-numeric:tabular-nums}
     </style>""",
     unsafe_allow_html=True,
+)
 )
 
 # ------------------------------------------------------------------ assumptions
@@ -179,7 +180,9 @@ with st.sidebar:
     st.header("Dispatch controls")
     st.slider("Dispatch Fill Threshold", 50, 90, 75, format="%d%%", key="thr")
     ev_mix = st.slider("EV Fleet Mix (%)", 0, 100, 30, step=5, format="%d%%") / 100
-    st.button("🚀 Generate Today's Optimized Routes", type="primary", use_container_width=True, on_click=regenerate)
+    if st.button("🚀 Generate Today's Optimized Routes", type="primary", use_container_width=True):
+    regenerate()
+    st.toast("✅ Routes successfully optimized!", icon="🚛")
     if st.session_state.thr != st.session_state.plan_thr:
         st.warning("Threshold changed. Generate routes to apply it.")
     st.caption(f"Routes planned at {st.session_state.plan_thr}% threshold. Bins are synthetic demo data.")
