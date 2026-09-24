@@ -97,13 +97,24 @@ def baseline_routes():
 
 
 def path_points(seq):
-    """Depot -> stops -> depot as [lat, lon] with L-shaped street-grid corners."""
+    """Fetch actual road routes via OSRM API, fallback to direct lines."""
+    import requests
+    
     pts = [DEPOT] + [POS[i] for i in seq] + [DEPOT]
-    out = [pts[0]]
-    for a, b in zip(pts, pts[1:]):
-        out += [(a[0], b[1]), b]
-    return [list(map(float, p)) for p in out]
-
+    
+    # The routing API needs coordinates formatted as longitude,latitude
+    coord_str = ";".join([f"{p[1]},{p[0]}" for p in pts])
+    url = f"http://router.project-osrm.org/route/v1/driving/{coord_str}?overview=full&geometries=geojson"
+    
+    try:
+        # Ask the API for the exact road geometry
+        res = requests.get(url, timeout=5).json()
+        coords = res["routes"][0]["geometry"]["coordinates"]
+        # Convert back to latitude,longitude for our map
+        return [[lat, lon] for lon, lat in coords]
+    except Exception:
+        # Safe fallback: draw direct straight lines if the API is busy
+        return [[p[0], p[1]] for p in pts]
 
 def schedule(routes) -> pd.DataFrame:
     rows = []
