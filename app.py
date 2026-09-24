@@ -180,8 +180,8 @@ with st.sidebar:
     st.slider("Dispatch Fill Threshold", 50, 90, 75, format="%d%%", key="thr")
     ev_mix = st.slider("EV Fleet Mix (%)", 0, 100, 30, step=5, format="%d%%") / 100
     if st.button("🚀 Generate Today's Optimized Routes", type="primary", use_container_width=True):
-    regenerate()
-    st.toast("✅ Routes successfully optimized!", icon="🚛")
+        regenerate()
+        st.toast("✅ Routes successfully optimized!", icon="🚛")
     if st.session_state.thr != st.session_state.plan_thr:
         st.warning("Threshold changed. Generate routes to apply it.")
     st.caption(f"Routes planned at {st.session_state.plan_thr}% threshold. Bins are synthetic demo data.")
